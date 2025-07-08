@@ -15,7 +15,7 @@ export function ContextProvider({ children }) {
   };
 
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear(); // ⚠️ Removes all keys!
     setUser(null);
     navigate("/");
   };
