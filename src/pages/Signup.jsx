@@ -1,64 +1,64 @@
 import React, { useState } from 'react'
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom";
-import {toast} from "react-toastify"
+import { toast } from "react-toastify"
 import { BASE_URL } from "../api";
 
 export default function Signup() {
-   const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const navigate = useNavigate()
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate()
 
-    // Email Validation 
+  // Email Validation 
 
-    const isValidEmail = (email) => {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    };
+  const isValidEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
-    // Password Validation 
+  // Password Validation 
 
-    const isValidPassword = (password) => {
-        return password.length >= 6 && /[A-Z]/.test(password) && /[\d]/.test(password) && /[\W]/.test(password);
-    };
+  const isValidPassword = (password) => {
+    return password.length >= 6 && /[A-Z]/.test(password) && /[\d]/.test(password) && /[\W]/.test(password);
+  };
 
-    const handleSubmit = async(e) => {
-        e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
-        if (!isValidEmail(email)) {
-            console.log("Email failed validation", email);
-            toast.error("Invalid email");
-            return;
-        }
-
-        if (!isValidPassword(password)) {
-            toast.error("Password must be at least 6 characters long, contain an uppercase letter, a number, and a special character.");
-            return;
-        }
-
-        try {
-            const response = await axios.post(`${BASE_URL}register`, {name, email, password})
-            if(response.data.success){
-                toast.success("Account created successfully");
-                navigate("/login");
-            }
-        } catch (error) {
-            console.log(error);
-            if(error.status == 401){
-                toast.error("User already exists");
-            }else{
-                toast.error("Signup failed. Try again.");
-            }
-            
-        }
+    if (!isValidEmail(email)) {
+      console.log("Email failed validation", email);
+      toast.error("Invalid email");
+      return;
     }
+
+    if (!isValidPassword(password)) {
+      toast.error("Password must be at least 6 characters long, contain an uppercase letter, a number, and a special character.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(`${BASE_URL}register`, { name, email, password })
+      if (response.data.success) {
+        toast.success("Account created successfully");
+        navigate("/login");
+      }
+    } catch (error) {
+      console.log('error---->', error);
+      if (error.status == 401) {
+        toast.error("User already exists");
+      } else {
+        toast.error("Signup failed. Try again.");
+      }
+
+    }
+  }
   return (
-   <section className="min-h-screen flex items-center justify-center bg-gray-50">
+    <section className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="w-full max-w-md bg-white rounded-lg p-8 shadow-md">
         <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">Join the Gymify Family</h2>
         <p className="text-center text-gray-600 mb-2">Your fitness journey starts now.</p>
         <p className="text-center text-gray-600 mb-8">
-        Sign up today and take the first step toward a stronger, healthier, and more confident you.
+          Sign up today and take the first step toward a stronger, healthier, and more confident you.
         </p>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-wrap -mx-2">
@@ -100,7 +100,7 @@ export default function Signup() {
                 Sign Up
               </button>
               <p className="text-center">
-                        Already have account? <Link to="/login" className='text-[#a9d608]'>Login</Link>
+                Already have account? <Link to="/login" className='text-[#a9d608]'>Login</Link>
               </p>
             </div>
           </div>
