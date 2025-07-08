@@ -26,7 +26,7 @@ export function ContextProvider({ children }) {
       if (!token) return;
 
       try {
-        const res = await axios.get(`${BASE_URL}auth/verify`, {
+        const res = await axios.get(`${BASE_URL}verify`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
